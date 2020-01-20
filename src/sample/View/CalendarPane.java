@@ -136,8 +136,7 @@ public class CalendarPane extends StackPane{
         TableColumn customerCol = new TableColumn("Klient");
         customerCol.setMinWidth(300);
         customerCol.setCellValueFactory(
-                new PropertyValueFactory<AppointmentObject, String>("name"));
-
+                new PropertyValueFactory<AppointmentObject, String>("customer"));
 
 
         table.getColumns().addAll(idCol,hourCol,hourtoCol,nameCol,customerCol);
@@ -166,6 +165,7 @@ public class CalendarPane extends StackPane{
         hBox3.getChildren().addAll(customers,addDatePicker,beuticans,servicebox,checkButon,timebox,addButton);
 
 
+
         VBox vbox=new VBox();
         HBox hBox1=new HBox();
         hBox1.getChildren().addAll(datePicker,choiceBox,calenderButton);
@@ -173,7 +173,7 @@ public class CalendarPane extends StackPane{
         vbox.getChildren().addAll(hBox,hBox1,table,label,hBox3,hBox2);
         vbox.setAlignment(Pos.TOP_CENTER);
         getChildren().add(vbox);
-        label.setAlignment(Pos.BOTTOM_LEFT);
+        //label.setAlignment(Pos.BOTTOM_LEFT);
 
 
 

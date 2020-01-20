@@ -9,6 +9,7 @@ public class AppointmentObject {
     private String timeTo;
     private String name;
     private String customer;
+    private int time;
 
     public String deleteMinutes(String timeFrom){
         String[] strings= timeFrom.split(":");
@@ -16,12 +17,13 @@ public class AppointmentObject {
 
         return string;
     }
-    public AppointmentObject(String id, String timeFrom, String  timeTo, String name, String customer) {
+    public AppointmentObject(String id, String timeFrom, String  timeTo, String name, String customer,String time) {
         this.id = id;
         this.timeFrom = deleteMinutes(timeFrom);
         this.timeTo = deleteMinutes(timeTo);
         this.name = name;
         this.customer = customer;
+        this.time=Integer.parseInt(time);
     }
 
 

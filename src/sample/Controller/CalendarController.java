@@ -33,19 +33,15 @@ public class CalendarController {
         setChoiceBox();
         circle();
         AddCustomerController addCustomerController=new AddCustomerController(model,calenderPane);
-
-
         calenderPane.getChoiceBox().setOnAction(e->{
             getId();
-
         });
         calenderPane.getDatePicker().setOnAction(e->{
-
            getDate();
-
         }
         );
-        calenderPane.getCalenderButton().setOnAction(event -> circle());
+        calenderPane.getCalenderButton().setOnAction(event ->{ circle();}
+        );
         calenderPane.getDeleteButton().setOnAction(e -> delete());
 
 
@@ -68,7 +64,6 @@ public class CalendarController {
             }
 
             calenderPane.getChoiceBox().setValue(beuticans.get(0).getId()+": "+beuticans.get(0).getFirstName()+" "+beuticans.get(0).getFamilyName());
-            //load();
         });
         task.setOnFailed(event ->
                 setChoiceBox());

@@ -1,10 +1,14 @@
 package sample.View;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import javafx.scene.text.*;
+import javafx.scene.text.Font;
+
+import java.awt.*;
 
 
 public class MainPane extends Pane {
@@ -70,10 +74,9 @@ public class MainPane extends Pane {
         Pane pane=new Pane();
         pane.setPrefWidth(width);
         pane.setPrefHeight(height);
-        pane.setBackground(new Background(new BackgroundFill(Color.BLACK,null,null)));
         Text name=new Text("Salon Beuty");
         name.setFill(Color.HOTPINK);
-        name.setFont(Font.font("", FontWeight.BOLD, FontPosture.REGULAR, 100));
+        name.setFont(Font.font("", FontWeight.BOLD, FontPosture.ITALIC, 100));
         name.relocate(650, 300);
         name.setTextAlignment(TextAlignment.CENTER);
         pane.getChildren().add(name);

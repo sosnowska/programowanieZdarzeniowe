@@ -9,7 +9,8 @@ public class FreeTime {
     private List<AppointmentObject> appointments;
     private  List<String> freeTime;
     private List<String> allFree=new LinkedList<>();
-    List<Time> times;
+    private List<Time> times;
+    private int serviceTime;
     public FreeTime(){
 
     }
@@ -18,8 +19,9 @@ public class FreeTime {
         return allFree;
     }
 
-    public FreeTime(List<AppointmentObject> appointments) {
+    public FreeTime(List<AppointmentObject> appointments,int serviceTime) {
         this.appointments = appointments;
+        this.serviceTime=serviceTime;
     }
 
     public void setFreeTime(){
@@ -61,8 +63,10 @@ public class FreeTime {
                 from=from.replace(":00","");
             setBusy(from,to);
         }
+        System.out.println(serviceTime);
 
-        listTime(120);
+        listTime(serviceTime);
+
         return freeTime;
     }
 

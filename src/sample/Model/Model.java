@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 
@@ -19,7 +18,6 @@ public class Model {
 
     public Model() {
         entityManagerFactory= Persistence.createEntityManagerFactory("database");
-        //entityManager=entityManagerFactory.createEntityManager();
     }
     public void addService(String name, Long time, BigDecimal price){
         entityManager=entityManagerFactory.createEntityManager();
@@ -71,12 +69,12 @@ public class Model {
     public List<AppointmentObject> getAppointments(Long beuticanId, java.util.Date date1){
         entityManager=entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
-        List<Object[]> appointments= entityManager.createQuery(" SELECT a.id,a.timeFrom,a.timeTo,s.name as name,concat(b.firstName, ' ', b.familyName) as Klient from Appointment a" +
+        List<Object[]> appointments= entityManager.createQuery(" SELECT a.id,a.timeFrom,a.timeTo,s.name as name,concat(b.firstName, ' ', b.familyName) as Klient,s.time from Appointment a" +
                 " join  Beutican b on a.beuticanId=b.id" +
                 " join Customer c on c.id=a.customerId" +
                 " join Service s on a.serviceId=s.id" +
                 " where a.beuticanId=:id  and a.date=:date" +
-                " order by a.timeFrom desc")
+                " order by a.timeFrom asc")
                 .setParameter("date",date1)
                 .setParameter("id",beuticanId)
                 .getResultList();
@@ -85,7 +83,9 @@ public class Model {
         List<AppointmentObject> appointments1=new ArrayList<>();
         for(int i=0;i<appointments.size();i++) {
             Object[] objects = appointments.get(i);
-            AppointmentObject appointmentObject=new AppointmentObject( String.valueOf(objects[0]), String.valueOf(objects[1]), String.valueOf(objects[2]), String.valueOf(objects[3]), String.valueOf(objects[4]));
+            System.out.println(String.valueOf(objects[0]));
+            AppointmentObject appointmentObject=new AppointmentObject( String.valueOf(objects[0]), String.valueOf(objects[1]), String.valueOf(objects[2]), String.valueOf(objects[3]), String.valueOf(objects[4]),String.valueOf(objects[5]));
+            System.out.println(String.valueOf(objects[0]));
             appointments1.add(appointmentObject);
         }
 

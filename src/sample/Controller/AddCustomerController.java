@@ -9,6 +9,7 @@ import javafx.scene.control.TableView;
 import sample.Model.*;
 import sample.View.Alert;
 import sample.View.CalendarPane;
+import sample.View.PositiveTransactionAlert;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -17,13 +18,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class AddCustomerController {
-    Model model;
-    CalendarPane calendarPane;
-    Date date;
-    String id;
-    String customerId;
-    String time;
-    String serviceId;
+    private Model model;
+    private CalendarPane calendarPane;
+    private Date date;
+    private String id;
+    private String customerId;
+    private String time;
+    private String serviceId;
+    private int serviceTime;
+
 
     public AddCustomerController(Model model, CalendarPane calendarPane) {
         try {
@@ -42,13 +45,16 @@ public class AddCustomerController {
         setServices();
         calendarPane.getAddDatePicker().setOnAction(e -> { setAddDate(); calendarPane.getTimebox().getItems().clear();});
         calendarPane.getBeuticans().setOnAction(e->{ setId();calendarPane.getTimebox().getItems().clear(); });
-        calendarPane.getTimebox().setOnAction(event ->{ time=calendarPane.getTimebox().getValue().toString(); });
+        calendarPane.getTimebox().setOnAction(event ->{
+            if(calendarPane.getTimebox().getValue().toString()!=null)
+            time=calendarPane.getTimebox().getValue().toString(); });
         calendarPane.getCustomers().setOnAction(e->{ setCustomerId(); });
         calendarPane.getCheckButon().setOnAction(e->{ calendarPane.getTimebox().getItems().clear();
             circle(); });
         calendarPane.getServicebox().setOnAction(event -> setServiceId());
         calendarPane.getAddButton().setOnAction(event -> {
             add();
+            calendarPane.getTimebox().getItems().clear();
 
         });
 
@@ -71,6 +77,16 @@ public class AddCustomerController {
         String[] strings = string.split("\\:");
         id = strings[0];
 
+
+    }
+    public void setServiceTime(){
+        List<Service> services=model.getServices();
+        for(Service s: services){
+            if(serviceId.equals(s.getId().toString())){
+                serviceTime=s.getTime().intValue();
+            }
+        }
+
     }
     //ustawia wybranego klienta
     public void setCustomerId() {
@@ -84,6 +100,7 @@ public class AddCustomerController {
         String string = (String) calendarPane.getServicebox().getValue();
         String[] strings = string.split("\\:");
         serviceId = strings[0];
+        setServiceTime();
 
     }
 
@@ -177,7 +194,7 @@ public class AddCustomerController {
 
     public void add(){
         if(time==null){
-            Alert alert=new Alert("Nie wybrano daty","Kliklij na przycisk znajdz i wybierz datę");
+            Alert alert=new Alert("Nie wybrano godziny","Kliklij na przycisk znajdz i wybierz godzine");
         }
         else {
             java.sql.Time time1;
@@ -193,6 +210,7 @@ public class AddCustomerController {
             model.addAppointment( Long.valueOf(customerId),Long.valueOf(serviceId),Long.valueOf(id),time1,java.sql.Date.valueOf( date.toInstant()
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate()));
+            PositiveTransactionAlert alert=new PositiveTransactionAlert("Dodano wizytę","");
         }
 
     }
@@ -216,7 +234,7 @@ public class AddCustomerController {
                 }
                 List<String> strings;
                     List<AppointmentObject> objects=model.getAppointments(Long.parseLong(id), date);
-                    FreeTime freeTime = new FreeTime(objects);
+                    FreeTime freeTime = new FreeTime(objects,serviceTime);
                     strings = freeTime.setTime();
 
 
@@ -226,7 +244,10 @@ public class AddCustomerController {
         progressIndicator.progressProperty().bind(task.progressProperty());
 
         task.setOnSucceeded(evt -> {
-            System.out.println("hheeeeeeeereeeeee");
+            if(task.getValue().size()==0) {
+                Alert alert = new Alert("Brak dostępnych godzin", "Wybierz inny dzień");
+            }
+
             for(String s:task.getValue()){
                 calendarPane.getTimebox().getItems().add(s);
             }
@@ -234,7 +255,6 @@ public class AddCustomerController {
             calendarPane.getChildren().remove(progressIndicator);
         });
         task.setOnFailed(event -> {
-            System.out.println("faaaail");
             List<String> strings;
             FreeTime freeTime1=new FreeTime();
             freeTime1.setFreeTime();

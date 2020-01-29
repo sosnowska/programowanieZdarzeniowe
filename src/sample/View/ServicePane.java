@@ -9,8 +9,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import sample.Model.Service;
 
-import java.math.BigDecimal;
-
 public class ServicePane extends StackPane {
     private Button homeButton;
     private TableView table;

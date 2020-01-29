@@ -26,9 +26,9 @@ public class FreeTime {
 
     public void setFreeTime(){
         times=new LinkedList<>();
-        int hour=10;
+        int hour=9;
         int minutes=0;
-        for(int i=0;i<17;i++) {
+        for(int i=0;i<19;i++) {
             if(i%2==0) {
                 Time time=new Time();
                 minutes=0;
@@ -59,18 +59,27 @@ public class FreeTime {
 
             String from=a.getTimeFrom();
             String to=a.getTimeTo();
+            if(from.startsWith("0")){
+                from="9";
+            }
             if(from.contains(":00"))
                 from=from.replace(":00","");
+            if(to.contains(":00"))
+                to=to.replace(":00","");
+            //System.out.println(from);
+            //System.out.println(to);
             setBusy(from,to);
         }
-        System.out.println(serviceTime);
+
 
         listTime(serviceTime);
+        //showtime();
 
         return freeTime;
     }
 
     public void setBusy(String time,String end){
+
         for (int i = 0; i < times.size(); i++) {
             if (times.get(i).getTime().equals(time)) {
                 times.get(i).setFree(false);
@@ -94,7 +103,7 @@ public class FreeTime {
         for (int i = 0; i < times.size()-count; i++) {
             if (times.get(i).getFree()) {
                 if (i+count-2<times.size()){
-                    for (int j = i + 1; j < i+count-1; j++) {
+                    for (int j = i + 1; j < i+count; j++) {
                         if (!times.get(j).getFree())
                         {
 
@@ -112,5 +121,10 @@ public class FreeTime {
             }
         }
 
+    }
+    public void showtime(){
+        for(Time time:times){
+            System.out.println(time.getTime()+time.getFree());
+        }
     }
 }

@@ -1,18 +1,12 @@
 package sample.View;
 
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import sample.Model.Customer;
-
-import java.awt.*;
-
 public class View {
 
     private int width;
     private int height;
     private CustomerPane customerPane=new CustomerPane();
     private ServicePane servicePane=new ServicePane();
-    private MainPane mainPane=new MainPane(width,height);
+    private StartPane mainPane=new StartPane(width,height);
     private AppointmentPane appointmentPane =new AppointmentPane(width,height);
     private CustomerPane beuticanPane=new CustomerPane();
 
@@ -42,7 +36,7 @@ public class View {
 
     }
 
-    public MainPane getMainPane() {
+    public StartPane getMainPane() {
         return mainPane;
     }
 

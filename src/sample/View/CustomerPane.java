@@ -107,6 +107,7 @@ public class CustomerPane extends StackPane {
         phoneCol.setMinWidth(200);
         phoneCol.setCellValueFactory(
                 new PropertyValueFactory<Customer, String>("phoneNumber"));
+        phoneCol.setCellFactory(TextFieldTableCell.forTableColumn());
         TableColumn idCol = new TableColumn("id");
        // idCol.setCellFactory(TextFieldTableCell.forTableColumn());
         idCol.setMinWidth(100);

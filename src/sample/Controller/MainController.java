@@ -5,7 +5,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import sample.Controller.Customer.CustomerController;
-import sample.Controller.Customer.Section;
 import sample.Model.Model;
 import sample.View.*;
 
@@ -14,15 +13,12 @@ public class MainController extends Pane {
     private Model model;
     private int width;
     private  int height;
-
-
-
     public MainController(View view, Stage primaryStage,Model model) {
         this.model=model;
         width=view.getWidth();
         height=view.getHeight();
         this.view=view;
-        MainPane mainPane=view.getMainPane();
+        StartPane mainPane=view.getMainPane();
         CustomerPane customerPane=view.getCustomerPane();
 
         ServicePane servicePane=view.getServicePane();
@@ -30,7 +26,6 @@ public class MainController extends Pane {
         CustomerPane beuticanPane=new CustomerPane();
 
         Scene scene=new Scene(mainPane,width,height);
-
         Scene scene2=new Scene(calenderPane,width,height);
         Scene scene3=new Scene(customerPane,width,height);
         Scene scene4=new Scene(servicePane,width,height);

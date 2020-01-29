@@ -13,8 +13,6 @@ public class CalendarPane extends StackPane{
     private TableView<AppointmentObject> table;
 
     private Button homeButton;
-    private Button calenderButton;
-    private Button bookButton;
     private ChoiceBox choiceBox;
     private ChoiceBox beuticans;
     private ChoiceBox customers;
@@ -53,10 +51,6 @@ public class CalendarPane extends StackPane{
         return choiceBox;
     }
 
-    public ChoiceBox getBeuticans() {
-        return beuticans;
-    }
-
     public ChoiceBox getCustomers() {
         return customers;
     }
@@ -81,15 +75,6 @@ public class CalendarPane extends StackPane{
         return homeButton;
     }
 
-
-
-
-    public Button getCalenderButton() {
-        return calenderButton;
-    }
-    public Button getBookButton() {
-        return bookButton;
-    }
     public CalendarPane() {
         HBox hBox=new HBox();
         homeButton=new Button();
@@ -97,12 +82,6 @@ public class CalendarPane extends StackPane{
         homeButton.setPrefWidth(150);
         homeButton.setText("Home");
         hBox.getChildren().add(homeButton);
-
-
-        calenderButton=new Button();
-        calenderButton.setText("Znajdż");
-
-
 
         datePicker = new DatePicker();
         choiceBox = new ChoiceBox();
@@ -161,14 +140,15 @@ public class CalendarPane extends StackPane{
         servicebox=new ChoiceBox();
         servicebox.setMinWidth(200);
         HBox hBox3=new HBox();
-        Label label=new Label("Klient\tData \t Kosmetyczka\tUsługa\tGodzina");
-        hBox3.getChildren().addAll(customers,addDatePicker,beuticans,servicebox,checkButon,timebox,addButton);
+        Label label=new Label("Umów wizytę:");
+        Label label1=new Label("Usługa:");
+        hBox3.getChildren().addAll(customers,servicebox,checkButon,timebox,addButton);
 
 
 
         VBox vbox=new VBox();
         HBox hBox1=new HBox();
-        hBox1.getChildren().addAll(datePicker,choiceBox,calenderButton);
+        hBox1.getChildren().addAll(datePicker,choiceBox);
         vbox.setSpacing(50);
         vbox.getChildren().addAll(hBox,hBox1,table,label,hBox3,hBox2);
         vbox.setAlignment(Pos.TOP_CENTER);

@@ -9,13 +9,10 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import sample.Model.Beutican;
-
 import sample.Model.Model;
 import sample.View.Alert;
 import sample.View.CustomerPane;
 import sample.View.PositiveTransactionAlert;
-
-import java.math.BigDecimal;
 import java.util.List;
 
 public class BeuticanController {
@@ -183,7 +180,7 @@ public class BeuticanController {
         });
         task.setOnFailed(event -> {
             beuticanPane.getDeleteCustomer().clear();
-            Alert alert=new Alert("Nie mozna usunac klienta","Złe id lub klient jest zapisany na wizyte");
+            Alert alert=new Alert("Nie mozna usunac pracownika","Złe id lub do pracownika jest umowiony klient");
         });
         new Thread(task).start();
 

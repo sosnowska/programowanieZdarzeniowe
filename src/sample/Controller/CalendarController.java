@@ -23,26 +23,45 @@ public class CalendarController {
     private CalendarPane calenderPane;
     private String id;
     private Date date;
+    private AddAppointmentController addCustomerController;
 
     public CalendarController(Model model, CalendarPane calenderPane) {
         this.model = model;
         this.calenderPane=calenderPane;
+        addCustomerController=new AddAppointmentController(model,calenderPane);
         LocalDate loc=LocalDate.now();
         calenderPane.getDatePicker().setValue(loc);
         getDate();
         setChoiceBox();
         circle();
-        AddCustomerController addCustomerController=new AddCustomerController(model,calenderPane);
+
         calenderPane.getChoiceBox().setOnAction(e->{
             getId();
+            circle();
+            calenderPane.getTimebox().getItems().clear();
+
         });
         calenderPane.getDatePicker().setOnAction(e->{
            getDate();
+           circle();
+           calenderPane.getTimebox().getItems().clear();
+
         }
         );
-        calenderPane.getCalenderButton().setOnAction(event ->{ circle();}
-        );
         calenderPane.getDeleteButton().setOnAction(e -> delete());
+        calenderPane.getTimebox().setOnAction(event ->{
+            addCustomerController.TimeboxSetOnAction();
+        });
+        calenderPane.getCustomers().setOnAction(e->{ addCustomerController.setCustomerId(); });
+        calenderPane.getCheckButon().setOnAction(e->{
+           addCustomerController.findTimeSetOnAction();
+        });
+        calenderPane.getServicebox().setOnAction(event -> addCustomerController.setServiceId());
+        calenderPane.getAddButton().setOnAction(event -> {
+            addCustomerController.add();
+            circle();
+
+        });
 
 
     }
@@ -76,6 +95,7 @@ public class CalendarController {
         String string=(String)calenderPane.getChoiceBox().getValue();
         String[] strings=string.split("\\:");
         id=strings[0];
+        addCustomerController.setId(id);
 
     }
     //pobiera wybrana date
@@ -83,6 +103,7 @@ public class CalendarController {
         LocalDate localDate =calenderPane.getDatePicker().getValue();
         localDate = localDate.plusYears(0).plusMonths(0).plusDays(1);
          date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+         addCustomerController.setDate(date);
     }
     public void load(){
         List<AppointmentObject> appointments=model.getAppointments(Long.parseLong(id),date);

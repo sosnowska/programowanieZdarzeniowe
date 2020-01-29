@@ -1,17 +1,12 @@
 package sample.View;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-
 import javafx.scene.text.*;
 import javafx.scene.text.Font;
 
-import java.awt.*;
-
-
-public class MainPane extends Pane {
+public class StartPane extends StackPane {
     private  Button serviceButton;
     private Button homeButton;
     private Button appointmentButton;
@@ -41,7 +36,7 @@ public class MainPane extends Pane {
         return beauticanButton;
     }
 
-    public MainPane(int width, int height) {
+    public StartPane(int width, int height) {
         this.width=width;
         this.height=height;
         HBox hBox=new HBox();
@@ -78,13 +73,12 @@ public class MainPane extends Pane {
         name.setFill(Color.HOTPINK);
         name.setFont(Font.font("", FontWeight.BOLD, FontPosture.ITALIC, 100));
         name.relocate(650, 300);
-        name.setTextAlignment(TextAlignment.CENTER);
         pane.getChildren().add(name);
 
         VBox vbox=new VBox();
-        vbox.getChildren().add(hBox);
-        vbox.getChildren().add(pane);
+        vbox.getChildren().addAll(hBox,pane);
         getChildren().add(vbox);
+
 
     }
 
